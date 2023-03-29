@@ -41,3 +41,38 @@ public class BlackjackBackEnd {
     }
 
 }
+public int getPlayerFunds() {
+    return playerFunds;
+}
+
+public void setplayerFunds(int playerFunds) {
+    this.playerFunds = playerFunds;
+}
+
+public boolean isBlackJack (int handValue) {
+    return handValue == BLACKJACK;
+}
+
+public boolean isBust (int handValue) {
+    return handValue > BLACKJACK;
+}
+public boolean isDealerDone() {
+    return getDealerHandValue() >= DEALER_THRESHOLD;
+}
+
+public int getValue(String card) {
+    if (card.equals("A")) {
+        return 11;
+    } else if (card.equals("10") || card.equals("J") || card.equals("Q") || card.equals("K")) {
+        return 10;
+    } else {
+        return Integer.parseInt(card);
+    }
+}
+
+public String reshuffleDeck() {
+    if (deck.isEmpty()) {
+        shuffleDeck();
+    }
+    return;
+}
