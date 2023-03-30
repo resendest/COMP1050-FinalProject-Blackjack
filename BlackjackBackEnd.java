@@ -10,7 +10,7 @@ public class BlackjackBackEnd {
 	private List <String> deck, playerhand, dealerhand;
 	private int playerbet, playerfunds;
 	
-	public Blackjack() {
+	public void Blackjack() {
 		deck = new ArrayList<>();
 		playerhand = new ArrayList<>();
 		dealerhand = new ArrayList<>();
