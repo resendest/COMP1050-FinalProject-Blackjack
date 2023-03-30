@@ -1,11 +1,13 @@
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 public class BlackjackBackEnd {
 
 	private static final int dealer_threshold = 17;
 	private static final int max_hand_size = 12;
 	private static final int blackjack = 21;
 	
-	private list <String> deck, playerhand, dealerhand;
+	private List <String> deck, playerhand, dealerhand;
 	private int playerbet, playerfunds;
 	
 	public Blackjack() {
