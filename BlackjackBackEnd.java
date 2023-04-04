@@ -16,10 +16,6 @@ public class BlackjackBackEnd {
 		dealerhand = new ArrayList<>();
 		playerfunds = 10000;	
 	}
-	
-	
-	
-	
 
     public void shuffleDeck() {
         deck.clear();
