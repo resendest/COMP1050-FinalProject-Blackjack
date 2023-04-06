@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Collections;
 public class BlackjackBackEnd {
 
@@ -9,6 +10,7 @@ public class BlackjackBackEnd {
 	
 	private List <String> deck, playerhand, dealerhand;
 	private int playerbet, playerfunds;
+	private boolean pbj, dbj, pbust, dbust, end;
 	
 	public void Blackjack() {
 		deck = new ArrayList<>();
@@ -118,4 +120,8 @@ public class BlackjackBackEnd {
         }
         return deck.remove(0);
     }
+
+	
+		
+	
 }
