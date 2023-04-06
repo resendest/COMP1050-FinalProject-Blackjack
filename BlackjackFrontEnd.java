@@ -14,13 +14,10 @@ import javafx.stage.Stage;
 public class BlackjackFrontEnd extends Application {
 	
 	private BlackjackBackEnd play;
-    private Label player;
-    private Label dealer;
+    private Label player, dealer;
     private TextField bet;
-    private Button deal;
-    private Button hit;
-    private Button stand;
-    private Button reset;
+    private Button deal, hit, stand, reset;
+    
 
 	
 
@@ -45,6 +42,18 @@ public class BlackjackFrontEnd extends Application {
             toggleButtons(true, true, false, false);
         });
 	}
+	
+	public void placeBet(TextField bet) {
+		
+	}
+	
+	public void deal() {
+	}
+	
+	public void updateLabels() {
+	}
+	public void toggleButtons(boolean hit, boolean stand, boolean deal, boolean reset) {
+	}
+	}
 
 
-}
