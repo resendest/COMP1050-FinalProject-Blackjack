@@ -10,15 +10,15 @@ public class BlackjackBackEnd {
 	
 	private List <String> deck, playerhand, dealerhand;
 	private int playerbet, playerfunds;
-	private boolean pbj, dbj, pbust, dbust, end;
-	
+	private boolean pbj, dbj, pbust, dbust, end, dd_allowed, split_allowed, ins_allowed, pinsured;
+	private int splitHandIdx;
 	public void Blackjack() {
 		deck = new ArrayList<>();
 		playerhand = new ArrayList<>();
 		dealerhand = new ArrayList<>();
 		playerfunds = 10000;	
 	}
-
+//Shuffles deck
     public void shuffleDeck() {
         deck.clear();
         for (int i = 2; i <= 10; i++) {
@@ -42,8 +42,48 @@ public class BlackjackBackEnd {
         dealerhand.add(getNextCard());
         playerhand.add(getNextCard());
         dealerhand.add(getNextCard());
+        dd_allowed = true;
+        split_allowed = isSplitAllowed();
     }
-
+    //How to play in the split scenario, if legal.
+    public boolean split() {
+        if (!split_allowed || playerhand.size() != 2) {
+            return false;
+        }
+        String firstCard = playerhand.get(0);
+        String secondCard = playerhand.get(1);
+        if (!firstCard.equals(secondCard)) {
+            return false;
+        }
+        splitHandIdx = 1;
+        playerhand.remove(1);
+        playerhand.add(getNextCard());
+        dealerhand.add(getNextCard());
+        dd_allowed = true;
+        pbust = isBust(getPlayerHandValue());
+        return true;
+    }
+    
+    public void doubleDown() {
+        if (!dd_allowed || playerhand.size() != 2) {
+            return;
+        }
+        playerfunds -= playerbet;
+        playerbet *= 2;
+        playerhand.add(getNextCard());
+        pbust = isBust(getPlayerHandValue());
+        end = true;
+    }
+    
+    public boolean insurance() {
+        if (!ins_allowed || dealerhand.get(0).equals("A")) {
+            return false;
+        }
+        pinsured = true;
+        playerfunds -= playerbet / 2;
+        return true;
+    }
+    
     public int getPlayerHandValue() {
         int handValue = 0;
         int numAces = 0;
@@ -99,10 +139,36 @@ public class BlackjackBackEnd {
     public boolean isBust(int handValue) {
         return handValue > blackjack;
     }
-
+    
+    public boolean isSplitAllowed() {
+        if (playerhand.size() != 2) {
+            return false;
+        }
+        String card1 = playerhand.get(0);
+        String card2 = playerhand.get(1);
+        return card1.equals(card2);
+    }
+    
+    public boolean isDoubleDownAllowed() {
+        if (playerhand.size() != 2) {
+            return false;
+        }
+        int playerHandValue = getPlayerHandValue();
+        return (playerfunds >= playerbet) && (playerHandValue >= 9 && playerHandValue <= 11);
+    }
+    
+    public boolean isInsuranceAllowed() {
+        if (dealerhand.size() != 2) {
+            return false;
+        }
+        String dealerUpCard = dealerhand.get(1);
+        return dealerUpCard.equals("A");
+    }
+    
     public boolean isDealerDone() {
         return getDealerHandValue() >= dealer_threshold;
     }
+    
 
     public int getValue(String card) {
         if (card.equals("A")) {
