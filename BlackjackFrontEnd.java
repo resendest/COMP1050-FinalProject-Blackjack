@@ -20,7 +20,33 @@ public class BlackjackFrontEnd extends Application {
     private TextField betTF;
     private Button deal, hit, stand, insurance, split, dd, new_game;
     private Image cardBack;
+    private Image cA, sA, dS, hA;
+    private Image c2, s2, d2, h2;
+    private Image c3, s3, d3, h3;
+    private Image c4, s4, d4, h4;
+    private Image c5, s5, d5, h5;
+    private Image c6, s6, d6, h6;
+    private Image c7, s7, d7, h7;
+    private Image c8, s8, d8, h8;
+    private Image c9, s9, d9, h9;
+    private Image c10, s10, d10, h10;
+    private Image cJ, sJ, dJ, hJ;
+    private Image cQ, sQ, dQ, hQ;
+    private Image cK, sK, dK, hK;
     private ImageView cardBackView;
+    private ImageView cAV, sAV, dSV, hAV;
+    private ImageView c2V, s2V, d2V, h2V;
+    private ImageView c3V, s3V, d3V, h3V;
+    private ImageView c4V, s4V, d4V, h4V;
+    private ImageView c5V, s5V, d5V, h5V;
+    private ImageView c6V, s6V, d6V, h6V;
+    private ImageView c7V, s7V, d7V, h7V;
+    private ImageView c8V, s8V, d8V, h8V;
+    private ImageView c9V, s9V, d9V, h9V;
+    private ImageView c10V, s10V, d10V, h10V;
+    private ImageView cJV, sJV, dJV, hJV;
+    private ImageView cQV, sQV, dQV, hQV;
+    private ImageView cKV, sKV, dKV, hKV;
     private boolean canDD, canSplit, canInsure;
     
 
@@ -39,8 +65,9 @@ public class BlackjackFrontEnd extends Application {
         stand = new Button("Stand");
         
         play.shuffleDeck();
-        cardBack = new Image(); //need to insert picture
-        cardBackView = new ImageView(cardBackView);
+        cardBack = new Image ("http://opengameart.org/sites/default/files/card%20back%20red.png"); 
+        cardBackView = new ImageView(cardBack);
+        cA = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/418px-Ace_of_spades.svg.png?20150115015447");
         player = new Label("Your hand:");
         dealer = new Label("Dealer hand:");
         status = new Label("Place your bet, then click the New Game button to begin!");
