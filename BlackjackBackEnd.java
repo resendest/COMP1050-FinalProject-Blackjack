@@ -10,7 +10,7 @@ public class BlackjackBackEnd {
 	
 	private List <String> deck, playerhand, dealerhand;
 	private double playerbet, playerfunds;
-	private boolean pbj, dbj, pbust, dbust, end, dd_allowed, ins_allowed, pinsured;
+	private boolean pbj, dbj, pbust, end, dd_allowed, ins_allowed, pinsured;
 	public void Blackjack() {
 		deck = new ArrayList<>();
 		playerhand = new ArrayList<>();
