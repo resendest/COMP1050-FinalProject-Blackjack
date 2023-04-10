@@ -9,9 +9,8 @@ public class BlackjackBackEnd {
 	private static final int blackjack = 21;
 	
 	private List <String> deck, playerhand, dealerhand;
-	private int playerbet, playerfunds;
-	private boolean pbj, dbj, pbust, dbust, end, dd_allowed, split_allowed, ins_allowed, pinsured;
-	private int splitHandIdx;
+	private double playerbet, playerfunds;
+	private boolean pbj, dbj, pbust, dbust, end, dd_allowed, ins_allowed, pinsured;
 	public void Blackjack() {
 		deck = new ArrayList<>();
 		playerhand = new ArrayList<>();
@@ -43,26 +42,8 @@ public class BlackjackBackEnd {
         playerhand.add(getNextCard());
         dealerhand.add(getNextCard());
         dd_allowed = true;
-        split_allowed = isSplitAllowed();
     }
-    //How to play in the split scenario, if legal.
-    public boolean split() {
-        if (!split_allowed || playerhand.size() != 2) {
-            return false;
-        }
-        String firstCard = playerhand.get(0);
-        String secondCard = playerhand.get(1);
-        if (!firstCard.equals(secondCard)) {
-            return false;
-        }
-        splitHandIdx = 1;
-        playerhand.remove(1);
-        playerhand.add(getNextCard());
-        dealerhand.add(getNextCard());
-        dd_allowed = true;
-        pbust = isBust(getPlayerHandValue());
-        return true;
-    }
+
     
     public void doubleDown() {
         if (!dd_allowed || playerhand.size() != 2) {
@@ -116,19 +97,19 @@ public class BlackjackBackEnd {
         return handValue;
     }
 
-    public int getPlayerBet() {
+    public double getPlayerBet() {
         return playerbet;
     }
 
-    public void setPlayerBet(int playerbet) {
+    public void setPlayerBet(double playerbet) {
         this.playerbet = playerbet;
     }
 
-    public int getPlayerFunds() {
+    public double getPlayerFunds() {
         return playerfunds;
     }
 
-    public void setplayerFunds(int playerFunds) {
+    public void setplayerFunds(double playerFunds) {
         this.playerfunds = playerFunds;
     }
 
@@ -139,14 +120,25 @@ public class BlackjackBackEnd {
     public boolean isBust(int handValue) {
         return handValue > blackjack;
     }
-    
-    public boolean isSplitAllowed() {
-        if (playerhand.size() != 2) {
-            return false;
+
+    public boolean isDealerWin() {
+        if (getPlayerHandValue() < getDealerHandValue()) {
+            return true;
         }
-        String card1 = playerhand.get(0);
-        String card2 = playerhand.get(1);
-        return card1.equals(card2);
+        return false;
+    }
+    public boolean isPlayerWin() {
+        if (getPlayerHandValue() > getDealerHandValue()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isPush() {
+        if (getPlayerHandValue() == getDealerHandValue()) {
+            return true;
+        }
+        return false;
     }
     
     public boolean isDoubleDownAllowed() {
@@ -187,7 +179,21 @@ public class BlackjackBackEnd {
         return deck.remove(0);
     }
 
-	
-		
-	
+    public void betHandling() {
+        if (isBlackJack(getDealerHandValue())) {
+            playerfunds -= playerbet;
+        } else if (isBlackJack(getPlayerHandValue())) {
+            playerfunds = playerfunds + (playerbet * 1.5);
+        } else if (isBust(getPlayerHandValue())) {
+            playerfunds -= playerbet;
+        } else if (isBust(getDealerHandValue())) {
+            playerfunds += playerbet;
+        }  else if (isPush()) {
+
+        } else if (isDealerWin()) {
+            playerfunds -= playerbet;
+        } else if (isPlayerWin()) {
+            playerfunds += playerbet;
+        }
+    }
 }
