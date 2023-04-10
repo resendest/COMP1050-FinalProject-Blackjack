@@ -20,19 +20,24 @@ public class BlackjackBackEnd {
 //Shuffles deck
     public void shuffleDeck() {
         deck.clear();
+        String[] suits = new String[] {"Hearts", "Diamonds", "Clubs", "Spades"};
         for (int i = 2; i <= 10; i++) {
             for (int j = 0; j < 4; j++) {
-                deck.add(Integer.toString(i));
+                deck.add(Integer.toString(i) + " of " + suits[j]);
             }
         }
         for (int i = 0; i < 16; i++) {
-            deck.add("A");
+            for (int j = 0; j < 4; j++) {
+                deck.add("Ace of " + suits[j]);
+           }
         }
         for (int i = 0; i < 64; i++) {
-            deck.add("10");
+            for (int j = 0; j < 4; j++) {
+                deck.add("10 of " + suits[j]);
+            }
         }
-        Collections.shuffle(deck);
-    }
+    Collections.shuffle(deck);
+}
 
     public void dealCards() {
         playerhand.clear();
@@ -196,4 +201,6 @@ public class BlackjackBackEnd {
             playerfunds += playerbet;
         }
     }
+
+
 }
