@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Collections;
 public class BlackjackBackEnd {
 
@@ -8,30 +9,35 @@ public class BlackjackBackEnd {
 	private static final int blackjack = 21;
 	
 	private List <String> deck, playerhand, dealerhand;
-	private int playerbet, playerfunds;
-	
+	private double playerbet, playerfunds;
+	private boolean pbj, dbj, pbust, end, dd_allowed, ins_allowed, pinsured;
 	public void Blackjack() {
 		deck = new ArrayList<>();
 		playerhand = new ArrayList<>();
 		dealerhand = new ArrayList<>();
 		playerfunds = 10000;	
 	}
-
+//Shuffles deck
     public void shuffleDeck() {
         deck.clear();
+        String[] suits = new String[] {"Hearts", "Diamonds", "Clubs", "Spades"};
         for (int i = 2; i <= 10; i++) {
             for (int j = 0; j < 4; j++) {
-                deck.add(Integer.toString(i));
+                deck.add(Integer.toString(i) + " of " + suits[j]);
             }
         }
         for (int i = 0; i < 16; i++) {
-            deck.add("A");
+            for (int j = 0; j < 4; j++) {
+                deck.add("Ace of " + suits[j]);
+           }
         }
         for (int i = 0; i < 64; i++) {
-            deck.add("10");
+            for (int j = 0; j < 4; j++) {
+                deck.add("10 of " + suits[j]);
+            }
         }
-        Collections.shuffle(deck);
-    }
+    Collections.shuffle(deck);
+}
 
     public void dealCards() {
         playerhand.clear();
@@ -40,8 +46,30 @@ public class BlackjackBackEnd {
         dealerhand.add(getNextCard());
         playerhand.add(getNextCard());
         dealerhand.add(getNextCard());
+        dd_allowed = true;
     }
 
+    
+    public void doubleDown() {
+        if (!dd_allowed || playerhand.size() != 2) {
+            return;
+        }
+        playerfunds -= playerbet;
+        playerbet *= 2;
+        playerhand.add(getNextCard());
+        pbust = isBust(getPlayerHandValue());
+        end = true;
+    }
+    
+    public boolean insurance() {
+        if (!ins_allowed || dealerhand.get(0).equals("A")) {
+            return false;
+        }
+        pinsured = true;
+        playerfunds -= playerbet / 2;
+        return true;
+    }
+    
     public int getPlayerHandValue() {
         int handValue = 0;
         int numAces = 0;
@@ -74,19 +102,19 @@ public class BlackjackBackEnd {
         return handValue;
     }
 
-    public int getPlayerBet() {
+    public double getPlayerBet() {
         return playerbet;
     }
 
-    public void setPlayerBet(int playerbet) {
+    public void setPlayerBet(double playerbet) {
         this.playerbet = playerbet;
     }
 
-    public int getPlayerFunds() {
+    public double getPlayerFunds() {
         return playerfunds;
     }
 
-    public void setplayerFunds(int playerFunds) {
+    public void setplayerFunds(double playerFunds) {
         this.playerfunds = playerFunds;
     }
 
@@ -98,9 +126,46 @@ public class BlackjackBackEnd {
         return handValue > blackjack;
     }
 
+    public boolean isDealerWin() {
+        if (getPlayerHandValue() < getDealerHandValue()) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isPlayerWin() {
+        if (getPlayerHandValue() > getDealerHandValue()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isPush() {
+        if (getPlayerHandValue() == getDealerHandValue()) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isDoubleDownAllowed() {
+        if (playerhand.size() != 2) {
+            return false;
+        }
+        int playerHandValue = getPlayerHandValue();
+        return (playerfunds >= playerbet) && (playerHandValue >= 9 && playerHandValue <= 11);
+    }
+    
+    public boolean isInsuranceAllowed() {
+        if (dealerhand.size() != 2) {
+            return false;
+        }
+        String dealerUpCard = dealerhand.get(1);
+        return dealerUpCard.equals("A");
+    }
+    
     public boolean isDealerDone() {
         return getDealerHandValue() >= dealer_threshold;
     }
+    
 
     public int getValue(String card) {
         if (card.equals("A")) {
@@ -118,4 +183,24 @@ public class BlackjackBackEnd {
         }
         return deck.remove(0);
     }
+
+    public void betHandling() {
+        if (isBlackJack(getDealerHandValue())) {
+            playerfunds -= playerbet;
+        } else if (isBlackJack(getPlayerHandValue())) {
+            playerfunds = playerfunds + (playerbet * 1.5);
+        } else if (isBust(getPlayerHandValue())) {
+            playerfunds -= playerbet;
+        } else if (isBust(getDealerHandValue())) {
+            playerfunds += playerbet;
+        }  else if (isPush()) {
+
+        } else if (isDealerWin()) {
+            playerfunds -= playerbet;
+        } else if (isPlayerWin()) {
+            playerfunds += playerbet;
+        }
+    }
+
+
 }
