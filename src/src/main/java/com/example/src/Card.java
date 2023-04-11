@@ -1,3 +1,5 @@
+package com.example.src;
+
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -8,10 +10,8 @@ public class Card extends Parent {
     enum Suit {
         HEARTS, DIAMONDS, CLUBS, SPADES
     };
-
     enum Rank {
         TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10), ACE(11);
-
         final int value;
         private Rank (int value) {
             this.value = value;
@@ -34,7 +34,6 @@ public class Card extends Parent {
 
         Text t = new Text(toString());
         t.setWrappingWidth(50);
-
         getChildren().add(new StackPane(card, t));
     }
 
@@ -42,5 +41,4 @@ public class Card extends Parent {
     public String toString() {
         return r.toString() + " of " + s.toString();
     }
-
 }

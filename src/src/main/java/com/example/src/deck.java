@@ -1,3 +1,8 @@
+package com.example.src;
+
+import com.example.src.Card.Rank;
+import com.example.src.Card.Suit;
+
 public class deck {
     private Card[] cards = new Card[52];
 
@@ -6,8 +11,8 @@ public class deck {
     }
     public final void refill() {
         int i = 0;
-        for (Card.Suit suit : Card.Suit.values()) {
-            for (Card.Rank rank : Card.Rank.values()) {
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
                 cards [i++] = new Card(suit,rank);
             }
         }

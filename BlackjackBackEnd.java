@@ -17,7 +17,7 @@ public class BlackjackBackEnd {
 		dealerhand = new ArrayList<>();
 		playerfunds = 10000;	
 	}
-//Shuffles deck
+//Shuffles com.example.src.deck
     public void shuffleDeck() {
         deck.clear();
         String[] suits = new String[] {"Hearts", "Diamonds", "Clubs", "Spades"};
