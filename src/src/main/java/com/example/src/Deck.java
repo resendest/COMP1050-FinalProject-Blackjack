@@ -3,10 +3,10 @@ package com.example.src;
 import com.example.src.Card.Rank;
 import com.example.src.Card.Suit;
 
-public class deck {
+public class Deck {
     private Card[] cards = new Card[52];
 
-    public deck() {
+    public Deck() {
         refill();
     }
     public final void refill() {
