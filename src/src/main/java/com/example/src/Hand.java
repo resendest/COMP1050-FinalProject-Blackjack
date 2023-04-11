@@ -7,19 +7,19 @@ import javafx.scene.Node;
 import com.example.src.Card.Rank;
 
 public class Hand {
-    private ObservableList<Node>  cards;
+    private ObservableList<Node> c;
     private SimpleIntegerProperty value = new SimpleIntegerProperty(0);
 
     private int a = 0;
 
-    public Hand(ObservableList<Node>cards) {
-        this.cards = cards;
+    public Hand(ObservableList<Node>c) {
+        this.c = c;
     }
 
     public void takeCard(Card card) {
-        cards.add(card);
+        c.add(card);
 
-        if (card.r == Rank.ACE) {
+        if (card.r == Rank.Ace) {
             a++;
         }
 
@@ -32,12 +32,12 @@ public class Hand {
     }
 
     public void reset() {
-        cards.clear();
+        c.clear();
         value.set(0);
         a = 0;
     }
 
-    public SimpleIntegerProperty valueProperty() {
+    public SimpleIntegerProperty totalValue() {
         return value;
     }
 }
