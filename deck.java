@@ -1,4 +1,3 @@
-
 public class deck {
     private Card[] cards = new Card[52];
 
@@ -16,7 +15,7 @@ public class deck {
     public Card drawCard() {
         Card card = null;
         while(card == null) {
-            int index = (int)(Math.random()*cards.length);
+            int index = (int)(Math.random() * cards.length);
             card = cards[index];
             cards[index] = null;
         }
